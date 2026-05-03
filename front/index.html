@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>访客记录</title>
+    <style>
+      body { margin: 0; font-family: "Segoe UI", "Microsoft YaHei", sans-serif; background: #f5f5f5; color: #333; }
+      .wrap { max-width: 1100px; margin: 0 auto; padding: 16px; }
+      .panel { background: #fff; border: 1px solid #c9d0d9; border-radius: 10px; padding: 12px; margin-bottom: 12px; }
+      .top { display: flex; flex-direction: column; align-items: stretch; gap: 10px; }
+      .top-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+      .top-head-main { flex: 1; min-width: 0; }
+      .muted { color: #666; font-size: 13px; }
+      .date-row { display: flex; align-items: center; gap: 10px; flex-wrap: nowrap; width: 100%; min-width: 0; }
+      .date-row label { font-size: 13px; color: #555; }
+      #dateSelect { padding: 6px 10px; border: 1px solid #c9d0d9; border-radius: 8px; min-width: 160px; background: #fff; box-sizing: border-box; height: 34px; flex: 0 0 auto; }
+      #dayRecordCount { flex: 0 0 auto; white-space: nowrap; }
+      select#alertSelect { flex: 1 1 auto; min-width: 180px; max-width: 100%; padding: 6px 10px; border: 1px solid #c9d0d9; border-radius: 8px; background: #fff; box-sizing: border-box; height: 34px; }
+      .refresh-btn {
+        flex: 0 0 auto;
+        box-sizing: border-box;
+        width: 34px;
+        height: 34px;
+        padding: 0;
+        border: 1px solid #c9d0d9;
+        border-radius: 8px;
+        background: #fff;
+        color: #444;
+        font-size: 17px;
+        line-height: 1;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .refresh-btn:hover { background: #f7f7f7; }
+      .electron-close-btn {
+        flex: 0 0 auto;
+        padding: 6px 14px;
+        font-size: 13px;
+        border: 1px solid #c9d0d9;
+        border-radius: 8px;
+        background: #fff;
+        color: #333;
+        cursor: pointer;
+      }
+      .electron-close-btn:hover { background: #f0f0f0; }
+      .electron-close-btn[hidden] { display: none !important; }
+      .preview { width: 100%; min-height: 280px; object-fit: contain; border: 1px solid #c9d0d9; border-radius: 8px; background: #fafafa; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="panel">
+        <div class="top">
+          <div class="top-head">
+            <div class="top-head-main">
+              <div><strong>访客记录</strong></div>
+              <div id="meta" class="muted">加载中...</div>
+            </div>
+            <button type="button" id="electronCloseBtn" class="electron-close-btn" hidden>关闭</button>
+          </div>
+          <div class="date-row">
+            <label for="dateSelect">日期</label>
+            <select id="dateSelect"></select>
+            <span id="dayRecordCount" class="muted" style="font-size: 13px"></span>
+            <select id="alertSelect"></select>
+            <button id="refreshBtn" type="button" class="refresh-btn" title="刷新" aria-label="刷新">↻</button>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="muted" id="imgMeta">未选中记录</div>
+        <img id="preview" class="preview" alt="截图预览" />
+      </div>
+    </div>
+    <script src="./viewer.js"></script>
+  </body>
+</html>

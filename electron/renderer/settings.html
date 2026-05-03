@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>设置</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+      body {
+        overflow: hidden;
+        font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+        font-size: 13px;
+        background: #f5f5f5;
+        color: #333;
+      }
+      #form.page-form {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        box-sizing: border-box;
+        margin: 0;
+      }
+      .form-scroll {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 14px;
+        padding-bottom: 10px;
+      }
+      .actions-bar {
+        flex-shrink: 0;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        padding: 12px 14px;
+        border-top: 1px solid #c9d0d9;
+        background: #eceef2;
+        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.06);
+      }
+      h2 {
+        margin: 0 0 12px;
+        font-size: 16px;
+      }
+      fieldset {
+        border: 1px solid #c9d0d9;
+        border-radius: 8px;
+        margin-bottom: 12px;
+        padding: 10px 12px;
+        background: #fff;
+        overflow: visible;
+      }
+      legend {
+        padding: 0 6px;
+        font-weight: 600;
+      }
+      label {
+        display: block;
+        margin: 8px 0 3px;
+        color: #555;
+      }
+      input[type="text"],
+      input[type="number"],
+      input[type="password"],
+      textarea,
+      select {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 6px 8px;
+        border: 1px solid #c9d0d9;
+        border-radius: 6px;
+      }
+      textarea {
+        min-height: 64px;
+        resize: vertical;
+      }
+      .row {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+      .row > div {
+        flex: 1 1 160px;
+      }
+      .chk {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 10px;
+        position: relative;
+      }
+      .chk input {
+        width: auto;
+      }
+      button {
+        padding: 8px 16px;
+        border-radius: 8px;
+        border: 1px solid #705697;
+        background: #705697;
+        color: #fff;
+        cursor: pointer;
+      }
+      button.secondary {
+        background: #fff;
+        color: #333;
+        border-color: #c9d0d9;
+      }
+      .hint {
+        font-size: 11px;
+        color: #888;
+        margin-top: 4px;
+      }
+      .lbl-inline {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin: 8px 0 3px;
+        color: #555;
+      }
+      .lbl-inline > .lbl-text {
+        flex: 0 1 auto;
+      }
+      .chk .info-tip {
+        margin-left: 2px;
+      }
+      .info-tip {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .info-tip-icon {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        border: 1px solid #9aa0a8;
+        background: #f4f5f7;
+        color: #5c6370;
+        font-size: 11px;
+        font-weight: 700;
+        line-height: 14px;
+        text-align: center;
+        cursor: help;
+        user-select: none;
+      }
+      /* 默认向下展开，避免在 form-scroll 内向上溢出被 overflow 裁成一条（像高度塌了） */
+      .info-tip-pop {
+        display: none;
+        position: absolute;
+        left: 50%;
+        top: calc(100% + 8px);
+        bottom: auto;
+        transform: translateX(-50%);
+        padding: 10px 12px;
+        min-width: 220px;
+        max-width: min(360px, calc(100vw - 24px));
+        background: #fff;
+        border: 1px solid #c9d0d9;
+        border-radius: 8px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        font-size: 12px;
+        line-height: 1.55;
+        font-weight: 400;
+        color: #333;
+        z-index: 100;
+        white-space: normal;
+        text-align: left;
+        box-sizing: border-box;
+      }
+      .tip-title {
+        display: block;
+        font-weight: 600;
+        font-size: 12px;
+        color: #222;
+        margin-bottom: 6px;
+      }
+      .tip-title:not(:first-child) {
+        margin-top: 10px;
+      }
+      .tip-list {
+        margin: 6px 0 0;
+        padding-left: 1.15em;
+      }
+      .tip-list li {
+        margin: 5px 0;
+      }
+      .info-tip:hover .info-tip-pop,
+      .info-tip:focus-within .info-tip-pop {
+        display: block;
+      }
+      legend .legend-inner {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="form" class="page-form">
+      <div class="form-scroll">
+        <h2>设置</h2>
+      <fieldset>
+        <legend>界面</legend>
+        <label for="uiTitleHint">主窗口标题旁提示</label>
+        <textarea id="uiTitleHint" name="uiTitleHint"></textarea>
+      </fieldset>
+
+      <fieldset>
+        <legend>监控</legend>
+        <label for="windowTitleContainsSelect">优先被监控窗口</label>
+        <div class="row" style="align-items: stretch">
+          <div style="flex: 1 1 220px; min-width: 0">
+            <select id="windowTitleContainsSelect" name="windowTitleContains"></select>
+          </div>
+          <div style="flex: 0 0 auto; display: flex; align-items: flex-end">
+            <button type="button" class="secondary" id="refreshSettingsTitlesBtn">刷新窗口列表</button>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label class="lbl-inline" for="pollIntervalSec">
+              <span class="lbl-text">截屏分析间隔（秒，≥1）</span>
+              <span class="info-tip" tabindex="0" aria-label="说明">
+                <span class="info-tip-icon" aria-hidden="true">!</span>
+                <span class="info-tip-pop" role="tooltip">
+                  数值越小，对新画面反应越快，电脑占用也会略高。
+                </span>
+              </span>
+            </label>
+            <input id="pollIntervalSec" name="pollIntervalSec" type="number" min="1" step="1" />
+          </div>
+          <div>
+            <label class="lbl-inline" for="personConfThreshold">
+              <span class="lbl-text">可信度阈值（1–100，越高越严格）</span>
+              <span class="info-tip" tabindex="0" aria-label="说明">
+                <span class="info-tip-icon" aria-hidden="true">!</span>
+                <span class="info-tip-pop" role="tooltip">
+                  <span class="tip-title">何时报警</span>
+                  只有模型给出的可信度<strong>达到并超过</strong>该阈值时，才会判定为「有人来访」，并触发桌面提示、存图和邮件等。范围 1–100，程序内部会换算为 0–1 与模型输出比对。
+                  <span class="tip-title">怎么选</span>
+                  约 35 偏灵敏，约 50 较折中，可按现场光线与画面再调。
+                </span>
+              </span>
+            </label>
+            <input id="personConfThreshold" name="personConfThreshold" type="number" min="1" max="100" step="1" />
+          </div>
+        </div>
+
+        <div class="chk">
+          <input id="desktopNotify" name="desktopNotify" type="checkbox" />
+          <label for="desktopNotify" style="margin: 0">系统右下角弹窗提醒访客（节奏与下方「系统提醒间隔」一致）</label>
+          <span class="info-tip" tabindex="0" aria-label="说明">
+            <span class="info-tip-icon" aria-hidden="true">!</span>
+            <span class="info-tip-pop" role="tooltip">
+              点击通知将关闭该条提示并打开与「查看历史」相同的效果（浏览器访客页或应用内页面）。
+            </span>
+          </span>
+        </div>
+        <div class="row">
+          <div>
+            <label class="lbl-inline" for="alertCooldownSec">
+              <span class="lbl-text">系统提醒间隔（秒）</span>
+              <span class="info-tip" tabindex="0" aria-label="说明">
+                <span class="info-tip-icon" aria-hidden="true">!</span>
+                <span class="info-tip-pop" role="tooltip">
+                  同一段访客过程中，两次桌面弹窗提示之间至少间隔这么久，避免短时间重复打扰。
+                </span>
+              </span>
+            </label>
+            <input id="alertCooldownSec" name="alertCooldownSec" type="number" min="10" step="1" />
+          </div>
+        </div>
+
+        <div class="chk">
+          <input id="serveFrontOnStartup" name="serveFrontOnStartup" type="checkbox" />
+          <label for="serveFrontOnStartup" style="margin: 0">开启网页服务（端口 12000）</label>
+          <span class="info-tip" tabindex="0" aria-label="网页服务说明">
+            <span class="info-tip-icon" aria-hidden="true">!</span>
+            <span class="info-tip-pop" role="tooltip">
+              <span class="tip-title">监听方式</span>
+              在本机可访问 <strong>http://127.0.0.1:12000/</strong> 或 <strong>http://localhost:12000/</strong>；局域网内其它设备请使用这台电脑的局域网 IP 访问同一端口。
+              <span class="tip-title">应用内查看</span>
+              关闭此项后，仍可通过主窗口「查看历史」在应用内打开相同页面，不依赖浏览器。
+            </span>
+          </span>
+        </div>
+        <div class="chk">
+          <input id="raiseTargetWindowOnMonitor" name="raiseTargetWindowOnMonitor" type="checkbox" checked />
+          <label for="raiseTargetWindowOnMonitor" style="margin: 0">被监控窗口置顶</label>
+          <span class="info-tip" tabindex="0" aria-label="说明">
+            <span class="info-tip-icon" aria-hidden="true">!</span>
+            <span class="info-tip-pop" role="tooltip">
+              <span class="tip-title">作用</span>
+              将被监控目标窗口置顶，避免被其他窗口遮挡导致监听失效。
+              <span class="tip-title">说明</span>
+              会导致其它窗口激活时，可能会被监控目标窗口遮挡住。停止监听时会自动取消置顶效果。需灵活使用被监控目标窗口的移动和最小化来操作其它窗口。
+            </span>
+          </span>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>邮件通知</legend>
+        <div class="chk">
+          <input id="emailEnabled" name="emailEnabled" type="checkbox" />
+          <label for="emailEnabled" style="margin: 0">启用</label>
+        </div>
+        <div class="row">
+          <div>
+            <label for="emailHost">SMTP 主机</label>
+            <input id="emailHost" type="text" />
+          </div>
+          <div>
+            <label for="emailPort">端口</label>
+            <input id="emailPort" type="number" />
+          </div>
+        </div>
+        <div class="chk">
+          <input id="emailSecure" type="checkbox" />
+          <label for="emailSecure" style="margin: 0">secure（465 通常为 true；587 多为 false）</label>
+        </div>
+        <label for="emailAccount">邮箱账号（SMTP 登录与发件人 From，同一地址）</label>
+        <input id="emailAccount" type="text" autocomplete="username" />
+        <label for="emailPass">密码 / 授权码</label>
+        <input id="emailPass" type="password" autocomplete="new-password" />
+        <label for="emailTo">收件人</label>
+        <input id="emailTo" type="text" />
+        <div class="chk">
+          <input id="emailAttachImage" type="checkbox" checked />
+          <label for="emailAttachImage" style="margin: 0">邮件附图（触发瞬间画面；正文默认含时间与可信度）</label>
+          <span class="info-tip" tabindex="0" aria-label="说明">
+            <span class="info-tip-icon" aria-hidden="true">!</span>
+            <span class="info-tip-pop" role="tooltip">
+              开启后，触发邮件时会附上<strong>当时那一帧</strong>截图（与网页里「整段最佳」的那一帧不一定相同）。正文默认包含发生时间与可信度。
+            </span>
+          </span>
+        </div>
+        <label class="lbl-inline" for="emailCooldownSec">
+          <span class="lbl-text">邮件发送最小间隔（秒，≥30，默认 60）</span>
+          <span class="info-tip" tabindex="0" aria-label="说明">
+            <span class="info-tip-icon" aria-hidden="true">!</span>
+            <span class="info-tip-pop" role="tooltip">
+              两封访客邮件之间至少间隔这么久；填多少程序都会<strong>至少按 30 秒</strong>执行，防止过于频繁。
+            </span>
+          </span>
+        </label>
+        <input id="emailCooldownSec" type="number" min="30" step="1" value="60" />
+      </fieldset>
+
+      <fieldset>
+        <legend>
+          <span class="legend-inner">
+            连点器
+            <span class="info-tip" tabindex="0" aria-label="说明">
+              <span class="info-tip-icon" aria-hidden="true">!</span>
+              <span class="info-tip-pop" role="tooltip">
+                <span class="tip-title">连点器在做什么</span>
+                在屏幕<strong>固定坐标</strong>间歇模拟左键点击，常见用途包括：
+                <ul class="tip-list">
+                  <li>减轻长时间无操作导致的休眠或锁屏（具体仍取决于系统电源与锁屏策略）。</li>
+                  <li>当被监控窗口偶尔弹出对话框时，可将鼠标移到合适位置（例如「关闭」按钮），借助间歇点击协助关掉弹窗，方便监控继续。</li>
+                  <li>请勿把点击点放在会误触其它窗口、提交敏感操作或引起界面混乱的位置；使用前请确认焦点与目标安全。</li>
+                </ul>
+              </span>
+            </span>
+          </span>
+        </legend>
+        <div class="row">
+          <div>
+            <label for="clickerIntervalSec">间隔（秒，≥10）</label>
+            <input id="clickerIntervalSec" type="number" min="10" step="any" />
+          </div>
+        </div>
+        <div class="chk">
+          <input id="clickerStopHotkeyF8" type="checkbox" checked />
+          <label for="clickerStopHotkeyF8" style="margin: 0">按 F8 停止连点器</label>
+        </div>
+        <div class="chk">
+          <input id="clickerStopOnRightClick" type="checkbox" />
+          <label for="clickerStopOnRightClick" style="margin: 0">右键停止</label>
+        </div>
+        <div class="chk">
+          <input id="clickerStartWithMonitor" type="checkbox" />
+          <label for="clickerStartWithMonitor" style="margin: 0">开始监听时自动启动连点器</label>
+          <span class="info-tip" tabindex="0" aria-label="说明">
+            <span class="info-tip-icon" aria-hidden="true">!</span>
+            <span class="info-tip-pop" role="tooltip">
+              勾选后，在主窗口按下「监听」开始时会一并启动连点器；仍可随时在主窗口单独切换连点器开关。
+            </span>
+          </span>
+        </div>
+      </fieldset>
+      </div>
+
+      <div class="actions-bar">
+        <button type="submit">保存</button>
+        <button type="button" class="secondary" id="cancelBtn">关闭</button>
+      </div>
+    </form>
+    <script src="./settings.js"></script>
+  </body>
+</html>

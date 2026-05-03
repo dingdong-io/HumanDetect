@@ -1,0 +1,7 @@
+# ctypes 为标准库。raise_target / lower_target 使用 SetWindowPos（TOPMOST），无额外 pip。
+ultralytics>=8.0.0
+mss>=9.0.0
+PyGetWindow>=0.0.9
+opencv-python>=4.8.0
+numpy>=1.24.0
+pynput>=1.7.7

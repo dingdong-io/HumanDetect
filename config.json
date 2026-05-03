@@ -1,0 +1,31 @@
+{
+  "windowTitleContains": "设置",
+  "personConfThreshold": 50,
+  "pollIntervalSec": 5,
+  "alertCooldownSec": 20,
+  "uiTitleHint": "选择目标窗口，监听其内人形出没并提醒。注意保持目标窗口不被遮挡或最小化",
+  "serveFrontOnStartup": false,
+  "desktopNotify": true,
+  "emailCooldownSec": 60,
+  "lastFramePng": "last_frame.png",
+  "personSnapshotDir": "front/data",
+  "autoClicker": {
+    "intervalSec": 10,
+    "stopKey": "f8",
+    "stopOnRightClick": true,
+    "startWithMonitor": false,
+    "stopHotkeyF8": true
+  },
+  "email": {
+    "enabled": false,
+    "host": "smtp.*.com",
+    "port": 587,
+    "secure": true,
+    "user": "*@*.com",
+    "pass": "",
+    "from": "*@*.com",
+    "to": "*@*.com",
+    "attachImage": true
+  },
+  "raiseTargetWindowOnMonitor": false
+}

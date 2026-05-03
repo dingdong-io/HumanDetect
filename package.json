@@ -1,0 +1,18 @@
+{
+  "name": "imglisten-omni-watch",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "index.mjs",
+  "description": "imgListen-omni-watch",
+  "scripts": {
+    "dev": "chcp 65001 && electron electron/main.mjs",
+    "list": "node index.mjs --list",
+    "help": "node index.mjs --help",
+    "video:person": "py -3 python/video_person.py --help"
+  },
+  "dependencies": {
+    "electron": "^37.2.4",
+    "nodemailer": "^6.9.16"
+  }
+}
