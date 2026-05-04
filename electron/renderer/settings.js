@@ -99,7 +99,6 @@ function fill(cfg) {
   document.getElementById("personConfThreshold").value = personThresholdPctFromCfg(cfg);
   const acs = Number(cfg.alertCooldownSec) > 0 ? Number(cfg.alertCooldownSec) : 40;
   document.getElementById("alertCooldownSec").value = Math.max(10, acs);
-  document.getElementById("desktopNotify").checked = cfg.desktopNotify !== false;
   document.getElementById("serveFrontOnStartup").checked = cfg.serveFrontOnStartup !== false;
   document.getElementById("raiseTargetWindowOnMonitor").checked = cfg.raiseTargetWindowOnMonitor !== false;
 
@@ -162,7 +161,6 @@ form.addEventListener("submit", async (e) => {
     personConfThreshold: pct,
     alertCooldownSec: Math.max(10, Number(document.getElementById("alertCooldownSec").value) || 40),
     windowTitleContains: document.getElementById("windowTitleContainsSelect")?.value?.trim() ?? "",
-    desktopNotify: document.getElementById("desktopNotify").checked,
     serveFrontOnStartup: document.getElementById("serveFrontOnStartup").checked,
     raiseTargetWindowOnMonitor: document.getElementById("raiseTargetWindowOnMonitor").checked,
     emailCooldownSec: ecs,
