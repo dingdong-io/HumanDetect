@@ -174,6 +174,7 @@ let mainWindow = null;
 let settingsWindow = null;
 let historyWindow = null;
 const FRONT_PORT = 12000;
+let alertToneTimer = null;
 
 /** 仅调整 Z 序，不总在最前 */
 function bumpOurWindowsToFront() {
@@ -408,6 +409,7 @@ function mergeOpenVisitorSegment(cfg, segmentId, best) {
 
 function showVisitorDesktopNotify(cfg, body) {
   if (cfg?.desktopNotify === false) return;
+  playSystemAlertTone(3000);
   try {
     if (Notification.isSupported()) {
       const text = String(body || "").slice(0, 240);
@@ -420,6 +422,33 @@ function showVisitorDesktopNotify(cfg, body) {
       });
       n.show();
     }
+  } catch (_) {}
+}
+
+function playSystemAlertTone(durationMs = 3000) {
+  try {
+    if (alertToneTimer) {
+      clearInterval(alertToneTimer);
+      alertToneTimer = null;
+    }
+    const intervals = [0, 1200, 2400];
+    let idx = 0;
+    const startedAt = Date.now();
+    shell.beep();
+    idx = 1;
+    alertToneTimer = setInterval(() => {
+      const elapsed = Date.now() - startedAt;
+      if (idx < intervals.length && elapsed >= intervals[idx]) {
+        try {
+          shell.beep();
+        } catch (_) {}
+        idx += 1;
+      }
+      if (elapsed >= durationMs || idx >= intervals.length) {
+        clearInterval(alertToneTimer);
+        alertToneTimer = null;
+      }
+    }, 120);
   } catch (_) {}
 }
 
