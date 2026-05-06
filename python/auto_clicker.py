@@ -16,11 +16,18 @@
 from __future__ import annotations
 
 import argparse
+import sys
 import threading
 import time
 from typing import Optional
 
 from pynput import keyboard, mouse
+
+try:
+    # Windows 下强制 UTF-8 输出，避免 Electron 端读取日志乱码
+    sys.stdout.reconfigure(encoding="utf-8", line_buffering=True)
+except Exception:
+    pass
 
 
 def parse_bool(v: str) -> bool:
@@ -38,8 +45,6 @@ class AutoClicker:
         self._mouse_controller = mouse.Controller()
         self._mouse_listener: Optional[mouse.Listener] = None
         self._keyboard_listener: Optional[keyboard.Listener] = None
-        self._click_count = 0
-
     def _resolve_stop_key(self):
         # 兼容 F1~F12 和 esc
         if self.stop_key_name == "esc":
@@ -86,8 +91,6 @@ class AutoClicker:
             # 核心：先等待 interval，再点击（满足“开始不点”）
             while not self._stop_event.wait(self.interval_sec):
                 self._mouse_controller.click(mouse.Button.left, 1)
-                self._click_count += 1
-                print(f"[auto-clicker] clicked #{self._click_count}")
         finally:
             self._cleanup()
             print("[auto-clicker] 已停止。")

@@ -918,6 +918,7 @@ async function startAutoClicker() {
   ];
   const child = spawn(cmd, args, {
     stdio: ["ignore", "pipe", "pipe"],
+    env: { ...process.env, PYTHONUTF8: "1" },
   });
   state.clickerChild = child;
   sendClickerStatus("running", `连点器已启动：间隔 ${intervalSec}s`);

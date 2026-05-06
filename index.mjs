@@ -124,7 +124,7 @@ function printHelp() {
   pip install -r python/requirements.txt
 
 说明:
-  · 人形检测使用 Ultralytics YOLOv8n（COCO 的 person 类）。首次运行会下载 yolov8n.pt。
+  · 人形检测使用 Ultralytics YOLOv8n（COCO 的 person 类），默认读取 python/yolov8n.pt。
   · Microsoft OmniParser 用于将屏幕解析为 UI 控件/图标，不用于人体检测。
     若要在本机对同一截图做 OmniParser 解析，请克隆官方仓库并配置权重，自行在
     OmniParser 环境中对 last_frame.png 跑 gradio_demo 或 util 中的流程。
